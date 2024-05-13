@@ -1,13 +1,14 @@
 
 const pianoKey = document.querySelectorAll('.piano-keys .key');
 
-let audio = new Audio('../tunes/a.wav');
+let allKeys = [],
+    audio = new Audio('../tunes/a.wav');
 
 const playTune = (key) => {
 
     audio.src = `../tunes/${key}.wav`;
     audio.play();
-
+    console.log(allKeys);
     const clickedKey = document.querySelector(`[data-key="${key}"]`);
     clickedKey.classList.add('active');
 
@@ -15,12 +16,13 @@ const playTune = (key) => {
 };
 
 [...pianoKey].map(key => {
+    allKeys.push(ey.dataset.key);
     key.addEventListener('click', () => playTune(key.dataset.key));
 });
 
 const presetKey = (event) => {
     const { key } = event;
-    playTune(key);
+    if (allKeys.includes(key)) playTune(key);
 };
 
 document.addEventListener('keydown', presetKey);
