@@ -1,5 +1,6 @@
 
-const pianoKey = document.querySelectorAll('.piano-keys .key');
+const pianoKey = document.querySelectorAll('.piano-keys .key'),
+    volumenSlider = document.querySelector('.volume-slider input');
 
 let allKeys = [],
     audio = new Audio('../tunes/a.wav');
@@ -16,13 +17,19 @@ const playTune = (key) => {
 };
 
 [...pianoKey].map(key => {
-    allKeys.push(ey.dataset.key);
+    allKeys.push(key.dataset.key);
     key.addEventListener('click', () => playTune(key.dataset.key));
 });
+
+const handleVolumen = ({ target }) => {
+    audio.volume = target.value;
+    console.log(audio.volume);
+};
 
 const presetKey = (event) => {
     const { key } = event;
     if (allKeys.includes(key)) playTune(key);
 };
 
+volumenSlider.addEventListener('input', handleVolumen);
 document.addEventListener('keydown', presetKey);
